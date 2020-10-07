@@ -132,7 +132,7 @@ workflows:
           # Uncomment if the repository does not yet exist
           # create-repo: true
       - aws-ecr/build_and_push_image:
-          name: build-and-push-image
+          name: build-and-push-image-inventory
           account-url: AWS_ECR_URL
           region: AWS_DEFAULT_REGION
           repo: eks_orb_microservices_demo_inventory
@@ -142,7 +142,7 @@ workflows:
           # Uncomment if the repository does not yet exist
           create-repo: true  
       - aws-ecr/build_and_push_image:
-          name: build-and-push-image
+          name: build-and-push-image-system
           account-url: AWS_ECR_URL
           region: AWS_DEFAULT_REGION
           repo: eks_orb_microservices_demo_system
@@ -155,7 +155,7 @@ workflows:
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
           requires:
-            - build-and-push-image
+            - build-and-push-image, build-and-push-image-inventory, build-and-push-image-system
       - deploy-application:
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
