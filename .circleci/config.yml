@@ -152,7 +152,7 @@ workflows:
       #     # Uncomment if the repository does not yet exist
       #     create-repo: true
       - aws-eks/create-cluster:
-          name: create-cluster-demo
+          # name: create-cluster-demo
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
           requires:
@@ -176,7 +176,7 @@ workflows:
           docker-image-name: "${AWS_ECR_URL}/eks_orb_demo_app:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
           requires:
-            - create-cluster-demo
+            - aws-eks/create-cluster
       # - deploy-application:
       #     name: deploy-application-inventory
       #     cluster-name: eks-orb-demo-app-deployment-inventory
