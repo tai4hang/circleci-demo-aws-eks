@@ -183,16 +183,16 @@ workflows:
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/eks_orb_microservices_demo_inventory:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
-          requires:
-            - create-cluster-inventory
+          # requires:
+          #   - create-cluster-inventory
       - deploy-application:
           name: deploy-application-system
           cluster-name: eks-orb-demo-app-deployment-system
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/eks_orb_microservices_demo_system:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
-          requires:
-            - create-cluster-system
+          # requires:
+          #   - create-cluster-system
       - test-application:
           name: test-application
           cluster-name: eks-orb-demo-app-deployment
