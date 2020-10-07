@@ -152,48 +152,54 @@ workflows:
           # Uncomment if the repository does not yet exist
           create-repo: true
       - aws-eks/create-cluster:
+          name: create-cluster-demo
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
           requires:
             - build-and-push-image
       - aws-eks/create-cluster:
+          name: create-cluster-inventory
           cluster-name: eks-orb-demo-app-deployment-inventory
           aws-region: $AWS_DEFAULT_REGION
           requires:
             - build-and-push-image-inventory
       - aws-eks/create-cluster:
+          name: create-cluster-system
           cluster-name: eks-orb-demo-app-deployment-system
           aws-region: $AWS_DEFAULT_REGION
           requires:
             - build-and-push-image-system
       - deploy-application:
+          name: deploy-application-demo
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/eks_orb_demo_app:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
           requires:
-            - aws-eks/create-cluster
+            - create-cluster-demo
       - deploy-application:
+          name: deploy-application-inventory
           cluster-name: eks-orb-demo-app-deployment-inventory
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/eks_orb_microservices_demo_inventory:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
           requires:
-            - aws-eks/create-cluster
+            - create-cluster-inventory
       - deploy-application:
+          name: deploy-application-system
           cluster-name: eks-orb-demo-app-deployment-system
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/eks_orb_microservices_demo_system:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
           requires:
-            - aws-eks/create-cluster
+            - create-cluster-system
       - test-application:
           name: test-application
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
           expected-version-info: "${CIRCLE_SHA1}"
           requires:
-            - deploy-application
+            - deploy-application-demo
       # - undeploy-application:
       #     cluster-name: eks-orb-demo-app-deployment
       #     aws-region: $AWS_DEFAULT_REGION
