@@ -40,6 +40,7 @@ jobs:
                 g;s|BUILD_DATE_VALUE|$BUILD_DATE|g;s|VERSION_INFO_VALUE|\
                 << parameters.version-info >>|g" > deployment/demo-app-deployment.yaml
       - aws-eks/update-kubeconfig-with-authenticator:
+          authenticator-release-tag: v0.5.1
           cluster-name: << parameters.cluster-name >>
           install-kubectl: true
           aws-region: << parameters.aws-region >>
@@ -68,6 +69,7 @@ jobs:
         type: string
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
+          authenticator-release-tag: v0.5.1
           cluster-name: << parameters.cluster-name >>
           install-kubectl: true
           aws-region: << parameters.aws-region >>
@@ -102,6 +104,7 @@ jobs:
         default: ""
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
+          authenticator-release-tag: v0.5.1
           cluster-name: << parameters.cluster-name >>
           install-kubectl: true
           aws-region: << parameters.aws-region >>
