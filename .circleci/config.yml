@@ -4,7 +4,6 @@ orbs:
   aws-eks: circleci/aws-eks@1.0.0
   aws-ecr: circleci/aws-ecr@6.12.2
   kubernetes: circleci/kubernetes@0.11.1
-  xmatters: xmatters/xmatters-orb@1.0.4
 
 jobs:
   deploy-application:
@@ -182,12 +181,10 @@ workflows:
       #     aws-region: $AWS_DEFAULT_REGION
       #     requires:
       #       - build-and-push-image-system
-      - request-approval
       - hold:
           type: approval
           requires:
             - build-and-push-image
-            - request-approval      
       - deploy-application:
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
