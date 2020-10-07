@@ -158,12 +158,14 @@ workflows:
       - aws-eks/create-cluster:
           name: create-cluster-inventory
           cluster-name: eks-orb-demo-app-deployment-inventory
+          authenticator-release-tag: v0.5.1
           aws-region: $AWS_DEFAULT_REGION
           requires:
             - build-and-push-image-inventory
       - aws-eks/create-cluster:
           name: create-cluster-system
           cluster-name: eks-orb-demo-app-deployment-system
+          authenticator-release-tag: v0.5.1
           aws-region: $AWS_DEFAULT_REGION
           requires:
             - build-and-push-image-system
