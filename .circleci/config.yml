@@ -126,12 +126,44 @@ workflows:
           tag: ${CIRCLE_SHA1}
           # Uncomment if the repository does not yet exist
           # create-repo: true
+      - aws-ecr/build-and-push-image:
+          name: build-and-push-image-inventory
+          account-url: AWS_ECR_URL
+          region: AWS_DEFAULT_REGION
+          repo: eks_orb_microservices_demo_inventory
+          dockerfile: ./Dockerfile
+          path: ./start/inventory
+          tag: ${CIRCLE_SHA1}
+          # Uncomment if the repository does not yet exist
+          # create-repo: true  
+      - aws-ecr/build-and-push-image:
+          name: build-and-push-image-system
+          account-url: AWS_ECR_URL
+          region: AWS_DEFAULT_REGION
+          repo: eks_orb_microservices_demo_system
+          dockerfile: ./Dockerfile
+          path: ./start/system
+          tag: ${CIRCLE_SHA1}
+          # Uncomment if the repository does not yet exist
+          # create-repo: true
+      # - aws-eks/create-cluster:
+      #     cluster-name: eks-orb-demo-app-deployment
+      #     authenticator-release-tag: v0.5.1
+      #     aws-region: $AWS_DEFAULT_REGION
+      #     requires:
+      #       - build-and-push-image
       - aws-eks/create-cluster:
-          cluster-name: eks-orb-demo-app-deployment
-          authenticator-release-tag: v0.5.1
+          name: create-cluster-inventory
+          cluster-name: eks-orb-demo-app-deployment-inventory
           aws-region: $AWS_DEFAULT_REGION
           requires:
-            - build-and-push-image
+            - build-and-push-image-inventory
+      - aws-eks/create-cluster:
+          name: create-cluster-system
+          cluster-name: eks-orb-demo-app-deployment-system
+          aws-region: $AWS_DEFAULT_REGION
+          requires:
+            - build-and-push-image-system
       - deploy-application:
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
@@ -146,14 +178,14 @@ workflows:
           expected-version-info: "${CIRCLE_SHA1}"
           requires:
             - deploy-application
-      - undeploy-application:
-          cluster-name: eks-orb-demo-app-deployment
-          aws-region: $AWS_DEFAULT_REGION
-          requires:
-            - test-application
-      - aws-eks/delete-cluster:
-          cluster-name: eks-orb-demo-app-deployment
-          aws-region: $AWS_DEFAULT_REGION
-          wait: true
-          requires:
-            - undeploy-application
+      # - undeploy-application:
+      #     cluster-name: eks-orb-demo-app-deployment
+      #     aws-region: $AWS_DEFAULT_REGION
+      #     requires:
+      #       - test-application
+      # - aws-eks/delete-cluster:
+      #     cluster-name: eks-orb-demo-app-deployment
+      #     aws-region: $AWS_DEFAULT_REGION
+      #     wait: true
+      #     requires:
+      #       - undeploy-application
