@@ -122,7 +122,7 @@ workflows:
           region: AWS_DEFAULT_REGION
           repo: eks_orb_demo_app
           dockerfile: ./Dockerfile
-          path: ./
+          path: ./demo_app
           tag: ${CIRCLE_SHA1}
           # Uncomment if the repository does not yet exist
           # create-repo: true
