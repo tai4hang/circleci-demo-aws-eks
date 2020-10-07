@@ -155,7 +155,17 @@ workflows:
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
           requires:
-            - build-and-push-image, build-and-push-image-inventory, build-and-push-image-system
+            - build-and-push-image
+      - aws-eks/create-cluster:
+          cluster-name: eks-orb-demo-app-deployment-inventory
+          aws-region: $AWS_DEFAULT_REGION
+          requires:
+            - build-and-push-image-inventory
+      - aws-eks/create-cluster:
+          cluster-name: eks-orb-demo-app-deployment-system
+          aws-region: $AWS_DEFAULT_REGION
+          requires:
+            - build-and-push-image-system
       - deploy-application:
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
@@ -164,14 +174,14 @@ workflows:
           requires:
             - aws-eks/create-cluster
       - deploy-application:
-          cluster-name: eks-orb-demo-app-deployment
+          cluster-name: eks-orb-demo-app-deployment-inventory
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/eks_orb_microservices_demo_inventory:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
           requires:
             - aws-eks/create-cluster
       - deploy-application:
-          cluster-name: eks-orb-demo-app-deployment
+          cluster-name: eks-orb-demo-app-deployment-system
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/eks_orb_microservices_demo_system:${CIRCLE_SHA1}"
           version-info: "${CIRCLE_SHA1}"
