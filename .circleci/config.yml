@@ -4,7 +4,7 @@ orbs:
   aws-eks: circleci/aws-eks@1.0.0
   aws-ecr: circleci/aws-ecr@6.12.2
   kubernetes: circleci/kubernetes@0.11.1
-  maven: circleci/maven@1.0.3
+  xmatters: xmatters/xmatters-orb@1.0.4
 
 jobs:
   deploy-application:
@@ -117,6 +117,18 @@ jobs:
           name: Check on pod status
           command: |
             kubectl get pods
+  request-approval:
+    docker:
+      - image: circleci/node:4.8.2
+    steps:
+      - xmatters/notify:
+          recipients: Engineering Managers
+
+  hold:
+    docker:
+      - image: circleci/node:4.8.2
+    steps:
+      - run: echo "Hold for approval"            
 workflows:
   deployment:
     jobs:
@@ -170,6 +182,12 @@ workflows:
       #     aws-region: $AWS_DEFAULT_REGION
       #     requires:
       #       - build-and-push-image-system
+      - request-approval
+      - hold:
+          type: approval
+          requires:
+            - build-and-push-image
+            - request-approval      
       - deploy-application:
           cluster-name: eks-orb-demo-app-deployment
           aws-region: $AWS_DEFAULT_REGION
@@ -178,6 +196,7 @@ workflows:
           requires:
           #   - aws-eks/create-cluster
               - build-and-push-image
+              - hold
       - deploy-application:
           name: deploy-application-inventory
           cluster-name: eks-orb-demo-app-deployment-inventory
