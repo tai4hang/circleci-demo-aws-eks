@@ -1,6 +1,6 @@
-C:\myGit\guide-cloud-aws\start\inventory\src\main\java\io\openliberty\guides\inventory\model\InventoryList.java
-C:\myGit\guide-cloud-aws\start\inventory\src\main\java\io\openliberty\guides\inventory\model\SystemData.java
-C:\myGit\guide-cloud-aws\start\inventory\src\main\java\io\openliberty\guides\inventory\InventoryApplication.java
-C:\myGit\guide-cloud-aws\start\inventory\src\main\java\io\openliberty\guides\inventory\InventoryResource.java
-C:\myGit\guide-cloud-aws\start\inventory\src\main\java\io\openliberty\guides\inventory\client\SystemClient.java
-C:\myGit\guide-cloud-aws\start\inventory\src\main\java\io\openliberty\guides\inventory\InventoryManager.java
+C:\myGit\aws-circleci-test\circleci-demo-aws-eks\start\inventory\src\main\java\io\openliberty\guides\inventory\model\InventoryList.java
+C:\myGit\aws-circleci-test\circleci-demo-aws-eks\start\inventory\src\main\java\io\openliberty\guides\inventory\client\SystemClient.java
+C:\myGit\aws-circleci-test\circleci-demo-aws-eks\start\inventory\src\main\java\io\openliberty\guides\inventory\InventoryApplication.java
+C:\myGit\aws-circleci-test\circleci-demo-aws-eks\start\inventory\src\main\java\io\openliberty\guides\inventory\InventoryManager.java
+C:\myGit\aws-circleci-test\circleci-demo-aws-eks\start\inventory\src\main\java\io\openliberty\guides\inventory\model\SystemData.java
+C:\myGit\aws-circleci-test\circleci-demo-aws-eks\start\inventory\src\main\java\io\openliberty\guides\inventory\InventoryResource.java

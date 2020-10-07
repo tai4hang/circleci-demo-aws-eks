@@ -50,6 +50,7 @@ public class InventoryResource {
 
     // Add to inventory
     manager.add(hostname, props);
+    manager.add("testing 123", props);
     return Response.ok(props).build();
   }
 
